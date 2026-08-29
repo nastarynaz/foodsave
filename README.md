@@ -11,7 +11,7 @@ Anggota 1:
 <!-- Muhammad Khoirunas (24/533373/TK/59083) – Backend Developer -->
 
 Anggota 2:
-<!-- Faiz Gymnastiar Wibawa (24/537851/TK/59634) – Frontend Developer -->
+Faiz Gymnastiar Wibawa (24/537851/TK/59634) – Frontend Developer 
 
 Tema:
 Climate Action
