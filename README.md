@@ -8,7 +8,7 @@ Ketua Kelompok:
 <!-- Javier Yazid Janadi (24/545752/TK/60737) – Software Architect -->
 
 Anggota 1:
-<!-- Muhammad Khoirunas (24/533373/TK/59083) – Backend Developer -->
+### Muhammad Khoirunas (24/533373/TK/59083) – Backend Developer
 
 Anggota 2:
 ### Faiz Gymnastiar Wibawa (24/537851/TK/59634) – Frontend Developer 
