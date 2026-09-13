@@ -20,4 +20,5 @@ PiringKu membantu pengguna mengurangi pemborosan makanan dengan mencatat stok ba
 
 ## Rencana Development
 
-### Uwu
+### Class Diagram
+![Class Diagram of piringku](Assets/ClassDiagram.png)
