@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FoodSave.Models
+namespace piringku.Models
 {
     public class User
     {
