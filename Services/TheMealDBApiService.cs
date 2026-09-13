@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FoodSave.Models;
+using piringku.Models;
 
-namespace FoodSave.Services
+namespace piringku.Services
 {
     public class TheMealDBApiService
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace FoodSave.Models
+namespace piringku.Models
 {
     public class RecipeHistory
     {
