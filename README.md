@@ -2,22 +2,22 @@
 
 PiringKu adalah aplikasi desktop berbasis C# yang membantu pengguna mengelola stok bahan makanan, memantau masa kedaluwarsa, dan memperoleh rekomendasi resep berdasarkan bahan yang tersedia. Aplikasi ini bertujuan mengurangi food waste (limbah makanan) di tingkat rumah tangga dan mahasiswa kos, sehingga mendukung upaya Climate Action melalui konsumsi pangan yang lebih efisien dan berkelanjutan.
 
-Kelompok PiringKu
+## Kelompok PiringKu
 
-Ketua Kelompok:
+Ketua Kelompok&emsp;:
+&emsp;Javier Yazid Janadi (24/545752/TK/60737) - Software Architect
 
-### Javier Yazid Janadi (24/545752/TK/60737) - Software Architect
+Anggota 1 &emsp;&emsp; &emsp;: &emsp; Muhammad Khoirunas (24/533373/TK/59083) – Backend Developer
 
-Anggota 1:
+Anggota 2&emsp; &emsp;  &emsp;:
+ &emsp; Faiz Gymnastiar Wibawa (24/537851/TK/59634) – Frontend Developer
 
-### Muhammad Khoirunas (24/533373/TK/59083) – Backend Developer
+## Tema
+### &emsp; Climate Action
 
-Anggota 2:
-
-### Faiz Gymnastiar Wibawa (24/537851/TK/59634) – Frontend Developer
-
-Tema:
-Climate Action
-
-Deskripsi Singkat:
+## Deskripsi Singkat
 PiringKu membantu pengguna mengurangi pemborosan makanan dengan mencatat stok bahan makanan, memberikan pengingat ketika makanan mendekati masa kedaluwarsa, serta merekomendasikan resep berdasarkan bahan yang tersedia. Dengan demikian, makanan dapat dimanfaatkan secara optimal sebelum terbuang dan pengguna dapat berkontribusi dalam mengurangi limbah makanan yang berdampak pada lingkungan.
+
+## Rencana Development
+
+### Uwu
