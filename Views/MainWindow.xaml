@@ -1,0 +1,124 @@
+<Window x:Class="FoodSave.Views.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FoodSave" Width="1120" Height="740" MinWidth="860" MinHeight="580" WindowStartupLocation="CenterScreen" Background="{StaticResource BackgroundBrush}">
+  <DockPanel Margin="22">
+    <Grid DockPanel.Dock="Top" Margin="0,0,0,18">
+      <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <StackPanel><TextBlock Text="FoodSave" FontSize="30" FontWeight="Bold" Foreground="{StaticResource AccentBrush}"/>
+        <TextBlock Text="Simpan baik, gunakan tepat waktu." Foreground="{StaticResource InkBrush}"/></StackPanel>
+      <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+        <TextBlock x:Name="GreetingText" VerticalAlignment="Center" Margin="0,0,15,0"/>
+        <Button Content="Keluar" Click="Logout_Click" Background="#64736B"/>
+      </StackPanel>
+    </Grid>
+    <TabControl x:Name="MainTabs" Background="White" BorderBrush="#DCE5DB" SelectionChanged="MainTabs_SelectionChanged">
+      <TabItem Header="Dashboard">
+        <ScrollViewer><StackPanel Margin="22">
+          <TextBlock Text="Ringkasan stok" FontSize="23" FontWeight="SemiBold" Margin="0,0,0,14"/>
+          <UniformGrid Columns="3" Margin="0,0,0,18">
+            <Border Background="#E8F4ED" Padding="18" Margin="0,0,8,0" CornerRadius="8"><StackPanel><TextBlock Text="Jenis bahan tersedia"/><TextBlock x:Name="StockCountText" FontSize="30" FontWeight="Bold"/></StackPanel></Border>
+            <Border Background="#FFF2D8" Padding="18" Margin="4,0,4,0" CornerRadius="8"><StackPanel><TextBlock Text="Segera kedaluwarsa"/><TextBlock x:Name="ExpiringCountText" FontSize="30" FontWeight="Bold"/></StackPanel></Border>
+            <Border Background="#FCE9E6" Padding="18" Margin="8,0,0,0" CornerRadius="8"><StackPanel><TextBlock Text="Sudah kedaluwarsa"/><TextBlock x:Name="ExpiredCountText" FontSize="30" FontWeight="Bold"/></StackPanel></Border>
+          </UniformGrid>
+          <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+            <Button Content="+ Tambah bahan" Click="AddFood_Click"/>
+            <Button Content="Cari resep" Click="GoRecipes_Click"/>
+          </StackPanel>
+          <TextBlock Text="Prioritas digunakan" FontSize="19" FontWeight="SemiBold" Margin="0,8,0,8"/>
+          <TextBlock x:Name="PriorityEmptyText" Text="Belum ada bahan yang perlu diprioritaskan." Margin="0,0,0,8"/>
+          <DataGrid x:Name="PriorityGrid" Height="250">
+            <DataGrid.RowStyle><Style TargetType="DataGridRow"><Style.Triggers>
+              <DataTrigger Binding="{Binding Status}" Value="Kedaluwarsa"><Setter Property="Background" Value="#FCE9E6"/></DataTrigger>
+              <DataTrigger Binding="{Binding Status}" Value="Hari ini"><Setter Property="Background" Value="#FFF2D8"/></DataTrigger>
+              <DataTrigger Binding="{Binding Status}" Value="Segera kedaluwarsa"><Setter Property="Background" Value="#FFF7E8"/></DataTrigger>
+            </Style.Triggers></Style></DataGrid.RowStyle>
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="Bahan" Binding="{Binding NamaMakanan}" Width="*"/>
+              <DataGridTextColumn Header="Stok" Binding="{Binding Jumlah}" Width="90"/>
+              <DataGridTextColumn Header="Kedaluwarsa" Binding="{Binding TanggalKedaluwarsa, StringFormat=dd MMM yyyy}" Width="150"/>
+              <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="170"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </StackPanel></ScrollViewer>
+      </TabItem>
+      <TabItem Header="Stok">
+        <DockPanel Margin="18">
+          <StackPanel DockPanel.Dock="Top">
+            <TextBlock Text="Bahan makanan" FontSize="23" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <WrapPanel Margin="0,0,0,10">
+              <TextBox x:Name="SearchBox" Width="220" ToolTip="Cari nama bahan" TextChanged="Filter_Changed"/>
+              <ComboBox x:Name="CategoryFilter" Width="155" SelectionChanged="Filter_Changed" SelectedIndex="0"><ComboBoxItem Content="Semua kategori"/></ComboBox>
+              <ComboBox x:Name="StatusFilter" Width="180" SelectionChanged="Filter_Changed" SelectedIndex="0">
+                <ComboBoxItem Content="Semua status"/><ComboBoxItem Content="Kedaluwarsa"/><ComboBoxItem Content="Hari ini"/>
+                <ComboBoxItem Content="Segera kedaluwarsa"/><ComboBoxItem Content="Aman"/>
+              </ComboBox>
+              <Button Content="+ Tambah" Click="AddFood_Click"/>
+              <Button Content="Ubah" Click="EditFood_Click"/>
+              <Button Content="Gunakan / Buang" Click="UseFood_Click"/>
+              <Button Content="Hapus" Click="DeleteFood_Click" Background="#A43D35"/>
+            </WrapPanel>
+            <TextBlock x:Name="StockEmptyText" Text="Belum ada bahan yang cocok dengan pencarian." Margin="0,0,0,8"/>
+          </StackPanel>
+          <DataGrid x:Name="FoodsGrid">
+            <DataGrid.RowStyle><Style TargetType="DataGridRow"><Style.Triggers>
+              <DataTrigger Binding="{Binding Status}" Value="Kedaluwarsa"><Setter Property="Background" Value="#FCE9E6"/></DataTrigger>
+              <DataTrigger Binding="{Binding Status}" Value="Hari ini"><Setter Property="Background" Value="#FFF2D8"/></DataTrigger>
+              <DataTrigger Binding="{Binding Status}" Value="Segera kedaluwarsa"><Setter Property="Background" Value="#FFF7E8"/></DataTrigger>
+            </Style.Triggers></Style></DataGrid.RowStyle>
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="Bahan" Binding="{Binding NamaMakanan}" Width="*"/>
+              <DataGridTextColumn Header="Kategori" Binding="{Binding Kategori}" Width="140"/>
+              <DataGridTextColumn Header="Jumlah" Binding="{Binding Jumlah}" Width="80"/>
+              <DataGridTextColumn Header="Dibeli" Binding="{Binding TanggalPembelian, StringFormat=dd MMM yyyy}" Width="130"/>
+              <DataGridTextColumn Header="Kedaluwarsa" Binding="{Binding TanggalKedaluwarsa, StringFormat=dd MMM yyyy}" Width="130"/>
+              <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="170"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="Resep">
+        <DockPanel Margin="18">
+          <StackPanel DockPanel.Dock="Top">
+            <TextBlock Text="Ide masak dari stokmu" FontSize="23" FontWeight="SemiBold"/>
+            <TextBlock Text="Resep berasal dari TheMealDB. Bahan tambahan mungkin tetap diperlukan." Margin="0,6,0,12"/>
+            <Button Content="Cari rekomendasi" Width="170" HorizontalAlignment="Left" Click="LoadRecipes_Click"/>
+            <TextBlock x:Name="RecipeMessage" Margin="0,10" TextWrapping="Wrap"/>
+          </StackPanel>
+          <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="2*"/><ColumnDefinition Width="3*"/></Grid.ColumnDefinitions>
+            <DataGrid x:Name="RecipesGrid" SelectionChanged="RecipesGrid_SelectionChanged" Margin="0,0,12,0">
+              <DataGrid.Columns><DataGridTextColumn Header="Resep" Binding="{Binding NamaResep}" Width="*"/>
+                <DataGridTextColumn Header="Kecocokan" Binding="{Binding MatchText}" Width="160"/></DataGrid.Columns>
+            </DataGrid>
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto"><StackPanel>
+              <TextBlock x:Name="RecipeTitle" Text="Pilih resep untuk melihat detail" FontSize="19" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,10"/>
+              <Image x:Name="RecipeImage" Height="180" Stretch="UniformToFill" HorizontalAlignment="Left"/>
+              <TextBlock x:Name="MatchedText" TextWrapping="Wrap" Margin="0,12,0,6" Foreground="{StaticResource AccentBrush}"/>
+              <TextBlock x:Name="MissingText" TextWrapping="Wrap" Margin="0,0,0,12"/>
+              <TextBlock x:Name="InstructionsText" TextWrapping="Wrap"/>
+            </StackPanel></ScrollViewer>
+          </Grid>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="Riwayat &amp; Statistik">
+        <ScrollViewer><StackPanel Margin="18">
+          <TextBlock Text="Penggunaan bahan" FontSize="23" FontWeight="SemiBold"/>
+          <TextBlock x:Name="StatisticsText" FontSize="16" Margin="0,8,0,12"/>
+          <DataGrid x:Name="UsageGrid" Height="245">
+            <DataGrid.Columns><DataGridTextColumn Header="Tanggal" Binding="{Binding TanggalPenggunaan, StringFormat=dd MMM yyyy HH:mm}" Width="170"/>
+              <DataGridTextColumn Header="Bahan" Binding="{Binding NamaMakanan}" Width="*"/>
+              <DataGridTextColumn Header="Jumlah" Binding="{Binding JumlahTerpakai}" Width="90"/>
+              <DataGridTextColumn Header="Status" Binding="{Binding StatusPenggunaan}" Width="130"/></DataGrid.Columns>
+          </DataGrid>
+          <TextBlock Text="Resep yang dibuka" FontSize="19" FontWeight="SemiBold" Margin="0,20,0,10"/>
+          <DataGrid x:Name="RecipeHistoryGrid" Height="180">
+            <DataGrid.Columns><DataGridTextColumn Header="Tanggal" Binding="{Binding TanggalAkses, StringFormat=dd MMM yyyy HH:mm}" Width="170"/>
+              <DataGridTextColumn Header="Resep" Binding="{Binding NamaResep}" Width="*"/></DataGrid.Columns>
+          </DataGrid>
+        </StackPanel></ScrollViewer>
+      </TabItem>
+      <TabItem Header="Profil"><StackPanel Margin="22">
+        <TextBlock Text="Profil" FontSize="23" FontWeight="SemiBold" Margin="0,0,0,16"/>
+        <TextBlock x:Name="ProfileName" FontSize="18"/><TextBlock x:Name="ProfileEmail" Margin="0,8,0,0"/>
+      </StackPanel></TabItem>
+    </TabControl>
+  </DockPanel>
+</Window>

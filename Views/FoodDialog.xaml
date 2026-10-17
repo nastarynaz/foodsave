@@ -1,0 +1,18 @@
+<Window x:Class="FoodSave.Views.FoodDialog" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bahan makanan" Width="420" Height="540" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Background="{StaticResource BackgroundBrush}">
+  <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="28">
+    <TextBlock x:Name="Heading" Text="Tambah bahan" FontSize="24" FontWeight="Bold" Margin="0,0,0,16"/>
+    <TextBlock Text="Nama bahan"/><TextBox x:Name="NameBox" MaxLength="150"/>
+    <TextBlock Text="Kategori"/><ComboBox x:Name="CategoryBox" IsEditable="True">
+      <ComboBoxItem Content="Sayur"/><ComboBoxItem Content="Buah"/><ComboBoxItem Content="Protein"/><ComboBoxItem Content="Susu dan olahan"/><ComboBoxItem Content="Bahan pokok"/><ComboBoxItem Content="Lainnya"/>
+    </ComboBox>
+    <TextBlock Text="Jumlah (unit)"/><TextBox x:Name="QuantityBox"/>
+    <TextBlock Text="Tanggal pembelian"/><DatePicker x:Name="PurchasePicker"/>
+    <TextBlock Text="Tanggal kedaluwarsa"/><DatePicker x:Name="ExpiryPicker"/>
+    <TextBlock x:Name="ErrorText" Foreground="#B42318" TextWrapping="Wrap" Margin="0,0,0,10"/>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button Content="Batal" Click="Cancel_Click" Background="#64736B"/>
+      <Button Content="Simpan" Click="Save_Click"/>
+    </StackPanel>
+  </StackPanel></ScrollViewer>
+</Window>

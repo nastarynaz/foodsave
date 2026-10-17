@@ -63,6 +63,27 @@ Fitur yang menjadi target pengembangan awal FoodSave meliputi:
 
 FoodSave menggunakan **TheMealDB API** sebagai layanan web pihak ketiga untuk menyediakan rekomendasi resep sehingga bahan makanan yang tersedia dapat dimanfaatkan secara lebih optimal.
 
+## Menjalankan Aplikasi
+
+Implementasi MVP tersedia sebagai proyek WPF di `FoodSave.csproj`. Siapkan **Windows**, **.NET 8 SDK**, dan **PostgreSQL**. Buat database kosong, lalu atur connection string melalui environment variable `FOODSAVE_CONNECTION_STRING`, misalnya:
+
+```powershell
+$env:FOODSAVE_CONNECTION_STRING = "Host=localhost;Port=5432;Database=foodsave;Username=foodsave;Password=YOUR_PASSWORD"
+dotnet run --project FoodSave.csproj
+```
+
+Aplikasi membuat tabel saat pertama dijalankan menggunakan `Database/schema.sql`. Pengguna database perlu izin membuat tabel dan indeks. Jangan menyimpan password database dalam source code. Untuk penggunaan TheMealDB di produksi, atur `FOODSAVE_MEALDB_KEY` dengan key yang sesuai; tanpa variabel ini aplikasi memakai test key `1`.
+
+Pengujian aturan stok, status kedaluwarsa, dan hashing kata sandi:
+
+```powershell
+dotnet run --project FoodSave.Tests/FoodSave.Tests.csproj
+```
+
+Untuk turut menguji transaksi dan isolasi antar pengguna, siapkan **database PostgreSQL khusus pengujian** lalu atur `FOODSAVE_TEST_CONNECTION_STRING` sebelum menjalankan perintah tersebut. Tes integrasi membuat dua akun sementara dan menghapusnya kembali setelah selesai.
+
+Alur utama: daftar atau masuk → tambah bahan pada tab Stok → lihat prioritas di Dashboard → catat penggunaan atau pembuangan → cari resep → lihat Riwayat & Statistik. Data stok yang dihapus diarsipkan agar riwayat pemakaiannya tetap tersimpan. Jumlah pada statistik menggunakan unit stok, bukan berat atau nilai emisi.
+
 ## Basis Data
 
 FoodSave menggunakan PostgreSQL untuk menyimpan data aplikasi. Basis data terdiri dari beberapa tabel utama:
@@ -74,7 +95,7 @@ Menyimpan informasi pengguna aplikasi.
 * `UserID`
 * `Nama`
 * `Email`
-* `Password`
+* `PasswordHash` (disimpan sebagai PBKDF2-SHA256 dengan salt acak)
 
 ### FoodItem
 
@@ -87,6 +108,7 @@ Menyimpan informasi bahan makanan yang dimiliki pengguna.
 * `Jumlah`
 * `TanggalPembelian`
 * `TanggalKedaluwarsa`
+* `IsArchived` (stok yang dihapus tidak menghilangkan riwayat)
 
 ### UsageHistory
 
@@ -103,6 +125,7 @@ Menyimpan riwayat penggunaan bahan makanan.
 Menyimpan riwayat akses terhadap rekomendasi resep.
 
 * `RecipeID`
+* `MealApiID`
 * `NamaResep`
 * `TanggalAkses`
 * `UserID`

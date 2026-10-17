@@ -1,34 +1,10 @@
-using System;
+namespace FoodSave.Models;
 
-namespace piringku.Models
+public sealed class RecipeHistory
 {
-    public class RecipeHistory
-    {
-        // =========================
-        // Attributes
-        // =========================
-
-        public int RecipeID { get; set; }
-        public int UserID { get; set; }
-        public string NamaResep { get; set; }
-        public DateTime TanggalAkses { get; set; }
-
-        // =========================
-        // Methods
-        // =========================
-
-        public bool SimpanResep()
-        {
-            // TODO:
-            // Save recipe access to database
-            return true;
-        }
-
-        public RecipeHistory GetResep()
-        {
-            // TODO:
-            // Retrieve recipe history
-            return this;
-        }
-    }
+    public int RecipeID { get; init; }
+    public int UserID { get; init; }
+    public string MealApiID { get; init; } = "";
+    public string NamaResep { get; init; } = "";
+    public DateTime TanggalAkses { get; init; }
 }

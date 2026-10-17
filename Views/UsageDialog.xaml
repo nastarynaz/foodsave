@@ -1,0 +1,14 @@
+<Window x:Class="FoodSave.Views.UsageDialog" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Catat penggunaan" Width="380" Height="280" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Background="{StaticResource BackgroundBrush}">
+  <StackPanel Margin="28">
+    <TextBlock x:Name="Heading" FontSize="20" FontWeight="Bold" Margin="0,0,0,14"/>
+    <TextBlock Text="Jumlah"/><TextBox x:Name="AmountBox" Text="1"/>
+    <TextBlock Text="Status"/><ComboBox x:Name="StatusBox" SelectedIndex="0">
+      <ComboBoxItem Content="Digunakan"/><ComboBoxItem Content="Dibuang"/>
+    </ComboBox>
+    <TextBlock x:Name="ErrorText" Foreground="#B42318"/>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button Content="Batal" Click="Cancel_Click" Background="#64736B"/><Button Content="Simpan" Click="Save_Click"/>
+    </StackPanel>
+  </StackPanel>
+</Window>

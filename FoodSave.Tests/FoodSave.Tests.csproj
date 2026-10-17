@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="8.0.9" />
+    <Compile Include="Program.cs" />
+    <Compile Include="../Models/FoodItem.cs" Link="FoodItem.cs" />
+    <Compile Include="../Models/User.cs" Link="User.cs" />
+    <Compile Include="../Models/UsageHistory.cs" Link="UsageHistory.cs" />
+    <Compile Include="../Models/RecipeHistory.cs" Link="RecipeHistory.cs" />
+    <Compile Include="../Models/Recipe.cs" Link="Recipe.cs" />
+    <Compile Include="../Services/InventoryRules.cs" Link="InventoryRules.cs" />
+    <Compile Include="../Services/PasswordService.cs" Link="PasswordService.cs" />
+    <Compile Include="../Services/FoodSaveRepository.cs" Link="FoodSaveRepository.cs" />
+    <None Include="../Database/schema.sql" Link="Database/schema.sql" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
