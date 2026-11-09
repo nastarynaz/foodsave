@@ -1,3 +1,4 @@
+using System.IO;
 using FoodSave.Models;
 using Npgsql;
 using NpgsqlTypes;
@@ -17,8 +18,16 @@ public sealed class FoodSaveRepository
     private async Task<NpgsqlConnection> OpenAsync()
     {
         var connection = new NpgsqlConnection(_connectionString);
-        await connection.OpenAsync();
-        return connection;
+        try
+        {
+            await connection.OpenAsync();
+            return connection;
+        }
+        catch
+        {
+            await connection.DisposeAsync();
+            throw;
+        }
     }
 
     public async Task InitializeAsync()
@@ -110,6 +119,16 @@ public sealed class FoodSaveRepository
         InventoryRules.ValidateUsage(amount, status);
         await using var connection = await OpenAsync();
         await using var transaction = await connection.BeginTransactionAsync();
+        await using (var read = new NpgsqlCommand("SELECT jumlah FROM food_items WHERE food_id=@food AND user_id=@user AND NOT is_archived FOR UPDATE", connection, transaction))
+        {
+            read.Parameters.AddWithValue("food", foodId);
+            read.Parameters.AddWithValue("user", userId);
+            var stock = await read.ExecuteScalarAsync();
+            if (stock is not int available)
+                throw new InvalidOperationException("Bahan tidak ditemukan atau tidak dapat diakses.");
+            if (available < amount)
+                throw new InvalidOperationException("Stok tidak cukup.");
+        }
         await using var update = new NpgsqlCommand("UPDATE food_items SET jumlah=jumlah-@amount WHERE food_id=@food AND user_id=@user AND NOT is_archived AND jumlah>=@amount", connection, transaction);
         update.Parameters.AddWithValue("amount", amount);
         update.Parameters.AddWithValue("food", foodId);

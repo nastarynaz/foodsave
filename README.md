@@ -84,6 +84,25 @@ Untuk turut menguji transaksi dan isolasi antar pengguna, siapkan **database Pos
 
 Alur utama: daftar atau masuk → tambah bahan pada tab Stok → lihat prioritas di Dashboard → catat penggunaan atau pembuangan → cari resep → lihat Riwayat & Statistik. Data stok yang dihapus diarsipkan agar riwayat pemakaiannya tetap tersimpan. Jumlah pada statistik menggunakan unit stok, bukan berat atau nilai emisi.
 
+## Implementasi Modul 8
+
+Laporan audit, penerapan encapsulation pada `FoodSaveRepository.RecordUsageAsync()`, transaksi PostgreSQL, hasil pengujian, dan checklist screenshot tersedia di [docs/MODUL_8_IMPLEMENTATION.md](docs/MODUL_8_IMPLEMENTATION.md).
+
+Pada macOS, UI WPF tidak dapat dijalankan secara native. Build target Windows didukung oleh konfigurasi `EnableWindowsTargeting`, sedangkan pengujian service menggunakan runner console `net8.0`:
+
+```bash
+dotnet build FoodSave.csproj
+dotnet run --project FoodSave.Tests/FoodSave.Tests.csproj
+```
+
+Untuk mewajibkan pengujian PostgreSQL, atur `FOODSAVE_TEST_CONNECTION_STRING` ke database khusus pengujian, lalu jalankan:
+
+```bash
+dotnet run --project FoodSave.Tests/FoodSave.Tests.csproj -- --require-database
+```
+
+Tanpa konfigurasi database, runner menampilkan `SKIP`; opsi `--require-database` mengembalikan exit code 1. Runner ini bukan proyek test framework, sehingga gunakan `dotnet run`, bukan `dotnet test`, untuk menjalankan pemeriksaan bisnis.
+
 ## Basis Data
 
 FoodSave menggunakan PostgreSQL untuk menyimpan data aplikasi. Basis data terdiri dari beberapa tabel utama:
