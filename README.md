@@ -84,6 +84,10 @@ Untuk turut menguji transaksi dan isolasi antar pengguna, siapkan **database Pos
 
 Alur utama: daftar atau masuk → tambah bahan pada tab Stok → lihat prioritas di Dashboard → catat penggunaan atau pembuangan → cari resep → lihat Riwayat & Statistik. Data stok yang dihapus diarsipkan agar riwayat pemakaiannya tetap tersimpan. Jumlah pada statistik menggunakan unit stok, bukan berat atau nilai emisi.
 
+## Implementasi Modul 9
+
+Penerapan inheritance dan polymorphism pada fitur Pengingat Kedaluwarsa (`ExpiryReminder` dan `ExpiryReminderService.BuildReminders()`) serta penggunaan access modifier `public`, `private`, `protected`, dan `internal` dijelaskan di [docs/MODUL_9_WORKSHEET.md](docs/MODUL_9_WORKSHEET.md).
+
 ## Implementasi Modul 8
 
 Laporan audit, penerapan encapsulation pada `FoodSaveRepository.RecordUsageAsync()`, transaksi PostgreSQL, hasil pengujian, dan checklist screenshot tersedia di [docs/MODUL_8_IMPLEMENTATION.md](docs/MODUL_8_IMPLEMENTATION.md).

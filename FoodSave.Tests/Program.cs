@@ -20,6 +20,32 @@ Check(ExpiryStatus.For(today, today) == "Hari ini", "hari ini");
 Check(ExpiryStatus.For(today.AddDays(3), today) == "Segera kedaluwarsa", "batas 3 hari");
 Check(ExpiryStatus.For(today.AddDays(4), today) == "Aman", "lebih dari 3 hari");
 
+// Modul 9: inheritance + polymorphism pada pengingat kedaluwarsa
+FoodItem Bahan(string name, int stock, int days) => new()
+{
+    NamaMakanan = name, Kategori = "Uji", Jumlah = stock,
+    TanggalPembelian = today.AddDays(-10), TanggalKedaluwarsa = today.AddDays(days)
+};
+Check(ExpiryReminder.Create(Bahan("Susu", 1, -2), today) is ExpiredReminder, "M9: lewat tanggal -> ExpiredReminder");
+Check(ExpiryReminder.Create(Bahan("Tahu", 1, 0), today) is TodayReminder, "M9: hari ini -> TodayReminder");
+Check(ExpiryReminder.Create(Bahan("Roti", 1, 3), today) is SoonReminder, "M9: 3 hari -> SoonReminder");
+Check(ExpiryReminder.Create(Bahan("Beras", 1, 4), today) is SafeReminder, "M9: 4 hari -> SafeReminder");
+var m9Consistent = true;
+for (var d = -5; d <= 10; d++)
+    m9Consistent &= ExpiryReminder.Create(Bahan("X", 1, d), today).Status == ExpiryStatus.For(today.AddDays(d), today);
+Check(m9Consistent, "M9: status turunan konsisten dengan ExpiryStatus");
+ExpiryReminder expired = ExpiryReminder.Create(Bahan("Susu", 2, -2), today);
+Check(expired.Message.Contains("sudah lewat 2 hari") && expired.Message.Contains("2 unit"), "M9: override Message ExpiredReminder");
+ExpiryReminder safe = ExpiryReminder.Create(Bahan("Beras", 5, 30), today);
+Check(!safe.NeedsAttention && safe.Message.Contains("masih aman"), "M9: SafeReminder memakai Message dasar");
+var reminders = ExpiryReminderService.BuildReminders(new[]
+{
+    Bahan("Roti", 1, 2), Bahan("Beras", 3, 30), Bahan("Tahu", 2, 0),
+    Bahan("Susu", 1, -1), Bahan("Keju", 0, -3)
+}, today);
+Check(reminders.Select(r => r.NamaMakanan).SequenceEqual(new[] { "Susu", "Tahu", "Roti" }),
+    "M9: urutan prioritas, tanpa bahan aman dan stok 0");
+
 var food = new FoodItem { NamaMakanan = "Telur", Kategori = "Protein", Jumlah = 2,
     TanggalPembelian = today, TanggalKedaluwarsa = today.AddDays(7) };
 InventoryRules.Validate(food);

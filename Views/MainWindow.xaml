@@ -33,9 +33,10 @@
             </Style.Triggers></Style></DataGrid.RowStyle>
             <DataGrid.Columns>
               <DataGridTextColumn Header="Bahan" Binding="{Binding NamaMakanan}" Width="*"/>
-              <DataGridTextColumn Header="Stok" Binding="{Binding Jumlah}" Width="90"/>
-              <DataGridTextColumn Header="Kedaluwarsa" Binding="{Binding TanggalKedaluwarsa, StringFormat=dd MMM yyyy}" Width="150"/>
-              <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="170"/>
+              <DataGridTextColumn Header="Stok" Binding="{Binding Jumlah}" Width="70"/>
+              <DataGridTextColumn Header="Kedaluwarsa" Binding="{Binding TanggalKedaluwarsa, StringFormat=dd MMM yyyy}" Width="120"/>
+              <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="150"/>
+              <DataGridTextColumn Header="Pengingat" Binding="{Binding Message}" Width="2*"/>
             </DataGrid.Columns>
           </DataGrid>
         </StackPanel></ScrollViewer>
