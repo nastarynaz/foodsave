@@ -39,7 +39,7 @@ public partial class MainWindow : Window
             StockCountText.Text = active.Count.ToString();
             ExpiringCountText.Text = active.Count(f => f.Status is "Hari ini" or "Segera kedaluwarsa").ToString();
             ExpiredCountText.Text = active.Count(f => f.Status == "Kedaluwarsa").ToString();
-            var priority = active.Where(f => f.Status != "Aman").OrderBy(f => f.TanggalKedaluwarsa).ToList();
+            var priority = ExpiryReminderService.BuildReminders(active, DateTime.Today);
             PriorityGrid.ItemsSource = priority;
             PriorityEmptyText.Visibility = priority.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             RebuildCategories();

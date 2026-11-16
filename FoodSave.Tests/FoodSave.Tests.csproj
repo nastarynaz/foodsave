@@ -14,6 +14,8 @@
     <Compile Include="../Models/UsageHistory.cs" Link="UsageHistory.cs" />
     <Compile Include="../Models/RecipeHistory.cs" Link="RecipeHistory.cs" />
     <Compile Include="../Models/Recipe.cs" Link="Recipe.cs" />
+    <Compile Include="../Models/ExpiryReminder.cs" Link="ExpiryReminder.cs" />
+    <Compile Include="../Services/ExpiryReminderService.cs" Link="ExpiryReminderService.cs" />
     <Compile Include="../Services/InventoryRules.cs" Link="InventoryRules.cs" />
     <Compile Include="../Services/PasswordService.cs" Link="PasswordService.cs" />
     <Compile Include="../Services/FoodSaveRepository.cs" Link="FoodSaveRepository.cs" />

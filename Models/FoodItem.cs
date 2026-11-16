@@ -14,9 +14,12 @@ public sealed class FoodItem
 
 public static class ExpiryStatus
 {
+    // internal: batas hari dipakai bersama oleh ExpiryStatus dan ExpiryReminder di assembly yang sama.
+    internal const int SoonThresholdDays = 3;
+
     public static string For(DateTime expiry, DateTime today)
     {
         var days = (expiry.Date - today.Date).Days;
-        return days < 0 ? "Kedaluwarsa" : days == 0 ? "Hari ini" : days <= 3 ? "Segera kedaluwarsa" : "Aman";
+        return days < 0 ? "Kedaluwarsa" : days == 0 ? "Hari ini" : days <= SoonThresholdDays ? "Segera kedaluwarsa" : "Aman";
     }
 }
